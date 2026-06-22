@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Warmindo Gandapura 53</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --merah: #C0392B;
+      --merah-gelap: #962d22;
+      --kuning: #F39C12;
+      --coklat: #4A2C2A;
+      --krem: #FDF3E7;
+      --krem2: #F5E6CC;
+      --putih: #FFFFFF;
+      --abu: #7a6a5a;
+      --display: 'Syne', sans-serif;
+      --body: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--body);
+      background: var(--krem);
+      color: var(--coklat);
+      overflow-x: hidden;
+    }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      background: var(--coklat);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%;
+      height: 64px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.25);
+    }
+    .nav-logo {
+      font-family: var(--display);
+      font-size: 1.25rem; color: var(--kuning);
+      letter-spacing: .02em;
+      white-space: nowrap;
+    }
+    .nav-logo span { color: var(--merah); }
+    .nav-links {
+      display: flex; gap: 2rem; list-style: none;
+    }
+    .nav-links a {
+      color: var(--krem); text-decoration: none;
+      font-size: .875rem; font-weight: 600;
+      letter-spacing: .05em; text-transform: uppercase;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--kuning); }
+    .nav-order-btn {
+      background: var(--merah); color: var(--putih);
+      border: none; border-radius: 6px;
+      padding: .5rem 1.25rem;
+      font-family: var(--body); font-size: .875rem; font-weight: 600;
+      cursor: pointer; transition: background .2s;
+      white-space: nowrap;
+    }
+    .nav-order-btn:hover { background: var(--merah-gelap); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 24px; height: 2px; background: var(--krem); display: block; transition: .3s; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      background: var(--coklat);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      padding: 80px 5% 60px;
+    }
+    .hero-bg-pattern {
+      position: absolute; inset: 0;
+      background-image: repeating-linear-gradient(
+        45deg,
+        rgba(255,255,255,.03) 0, rgba(255,255,255,.03) 1px,
+        transparent 0, transparent 50%
+      );
+      background-size: 20px 20px;
+    }
+    .hero-content {
+      max-width: 1100px; width: 100%;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: center; position: relative; z-index: 1;
+    }
+    .hero-text { }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(243,156,18,.15);
+      border: 1px solid var(--kuning);
+      color: var(--kuning);
+      font-size: .75rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      padding: .35rem .85rem; border-radius: 100px;
+      margin-bottom: 1.5rem;
+    }
+    .hero-title {
+      font-family: var(--display);
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      color: var(--putih); line-height: 1.05;
+      margin-bottom: 1rem;
+    }
+    .hero-title .highlight { color: var(--kuning); }
+    .hero-title .accent { color: var(--merah); }
+    .hero-desc {
+      color: rgba(253,243,231,.7);
+      font-size: 1rem; line-height: 1.7;
+      margin-bottom: 2rem; max-width: 440px;
+    }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--merah); color: var(--putih);
+      padding: .85rem 2rem; border-radius: 8px;
+      font-weight: 700; font-size: .95rem;
+      border: none; cursor: pointer;
+      text-decoration: none; display: inline-block;
+      transition: background .2s, transform .15s;
+    }
+    .btn-primary:hover { background: var(--merah-gelap); transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent; color: var(--krem);
+      padding: .85rem 2rem; border-radius: 8px;
+      font-weight: 700; font-size: .95rem;
+      border: 2px solid rgba(253,243,231,.3); cursor: pointer;
+      text-decoration: none; display: inline-block;
+      transition: border-color .2s, color .2s;
+    }
+    .btn-outline:hover { border-color: var(--kuning); color: var(--kuning); }
+
+    /* Bowl illustration */
+    .hero-visual {
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .bowl-wrap {
+      width: clamp(220px, 30vw, 360px);
+      aspect-ratio: 1; position: relative;
+    }
+    /* Glow */
+    .bowl-wrap::before {
+      content: '';
+      position: absolute; inset: -20%; border-radius: 50%;
+      background: radial-gradient(circle, rgba(243,156,18,.18) 0%, transparent 70%);
+    }
+    .bowl-svg { width: 100%; filter: drop-shadow(0 20px 40px rgba(0,0,0,.4)); }
+
+    /* Steam animation */
+    .steam { position: absolute; top: -10%; left: 50%; transform: translateX(-50%); }
+    .steam-line {
+      display: inline-block;
+      width: 6px; height: 40px;
+      background: linear-gradient(to top, rgba(255,255,255,.5), transparent);
+      border-radius: 4px;
+      margin: 0 6px;
+      animation: steam-rise 2.2s ease-in-out infinite;
+      opacity: 0;
+    }
+    .steam-line:nth-child(1) { animation-delay: 0s; }
+    .steam-line:nth-child(2) { animation-delay: .4s; height: 55px; }
+    .steam-line:nth-child(3) { animation-delay: .8s; height: 35px; }
+    @keyframes steam-rise {
+      0%   { opacity: 0; transform: translateY(0) scaleX(1); }
+      30%  { opacity: .6; }
+      100% { opacity: 0; transform: translateY(-60px) scaleX(1.5); }
+    }
+
+    /* Stats */
+    .hero-stats {
+      display: flex; gap: 2rem; margin-top: 2.5rem; flex-wrap: wrap;
+    }
+    .stat { }
+    .stat-num {
+      font-family: var(--display); font-size: 1.75rem;
+      color: var(--kuning); line-height: 1;
+    }
+    .stat-label {
+      font-size: .78rem; color: rgba(253,243,231,.6);
+      text-transform: uppercase; letter-spacing: .07em;
+      margin-top: .2rem;
+    }
+
+    /* ── SECTION COMMONS ── */
+    section { padding: 80px 5%; }
+    .section-eyebrow {
+      display: inline-block;
+      color: var(--merah); font-size: .78rem; font-weight: 700;
+      letter-spacing: .15em; text-transform: uppercase;
+      margin-bottom: .75rem;
+    }
+    .section-title {
+      font-family: var(--display);
+      font-size: clamp(1.75rem, 4vw, 2.75rem);
+      color: var(--coklat); line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+    .section-desc {
+      color: var(--abu); font-size: .95rem; line-height: 1.7;
+      max-width: 520px;
+    }
+    .section-head { max-width: 1100px; margin: 0 auto 3rem; }
+    .section-head.center { text-align: center; }
+    .section-head.center .section-desc { margin: 0 auto; }
+
+    /* ── MENU ── */
+    #menu { background: var(--putih); }
+    .menu-filter {
+      display: flex; gap: .75rem; flex-wrap: wrap;
+      max-width: 1100px; margin: 0 auto 2.5rem;
+    }
+    .filter-btn {
+      padding: .5rem 1.2rem; border-radius: 100px;
+      border: 2px solid var(--krem2);
+      background: transparent; color: var(--coklat);
+      font-family: var(--body); font-size: .85rem; font-weight: 600;
+      cursor: pointer; transition: all .2s;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--merah); color: var(--putih); border-color: var(--merah);
+    }
+    .menu-grid {
+      max-width: 1100px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .menu-card {
+      background: var(--krem); border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--krem2);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .menu-card:hover { transform: translateY(-5px); box-shadow: 0 12px 32px rgba(74,44,42,.12); }
+    .menu-card[data-cat]:not([data-cat="semua"]) { }
+    .card-img {
+      width: 100%; height: 180px; object-fit: cover;
+      background: var(--krem2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem;
+    }
+    .card-body { padding: 1.25rem; }
+    .card-tag {
+      font-size: .7rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--merah); margin-bottom: .4rem;
+    }
+    .card-name {
+      font-family: var(--display); font-size: 1.1rem;
+      color: var(--coklat); margin-bottom: .35rem;
+    }
+    .card-desc {
+      font-size: .82rem; color: var(--abu); line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+    .card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .card-price {
+      font-family: var(--display); font-size: 1.15rem; color: var(--merah);
+    }
+    .card-price small { font-family: var(--body); font-size: .75rem; color: var(--abu); font-weight: 400; }
+    .add-btn {
+      background: var(--merah); color: var(--putih);
+      border: none; border-radius: 8px;
+      width: 38px; height: 38px;
+      font-size: 1.4rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s, transform .15s;
+    }
+    .add-btn:hover { background: var(--merah-gelap); transform: scale(1.1); }
+
+    /* ── ABOUT ── */
+    #tentang { background: var(--krem); }
+    .about-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: center;
+    }
+    .about-img-stack { position: relative; }
+    .about-main-img {
+      width: 100%; border-radius: 16px;
+      background: var(--krem2);
+      height: 380px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 7rem;
+      border: 3px solid var(--krem2);
+      overflow: hidden;
+    }
+    .about-badge-float {
+      position: absolute; bottom: -1.5rem; right: -1.5rem;
+      background: var(--merah); color: var(--putih);
+      border-radius: 12px; padding: 1rem 1.25rem;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(192,57,43,.35);
+    }
+    .about-badge-num {
+      font-family: var(--display); font-size: 2rem; line-height: 1;
+    }
+    .about-badge-text { font-size: .75rem; opacity: .85; }
+    .about-text { }
+    .about-features {
+      margin-top: 2rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    }
+    .feat-item {
+      display: flex; align-items: flex-start; gap: .75rem;
+    }
+    .feat-icon {
+      font-size: 1.5rem; flex-shrink: 0;
+      width: 44px; height: 44px;
+      background: var(--krem2); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .feat-name { font-weight: 700; font-size: .9rem; color: var(--coklat); margin-bottom: .1rem; }
+    .feat-sub { font-size: .78rem; color: var(--abu); }
+
+    /* ── PROMO ── */
+    #promo { background: var(--coklat); }
+    .promo-inner {
+      max-width: 1100px; margin: 0 auto;
+    }
+    .promo-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 1.5rem; margin-top: 2.5rem;
+    }
+    .promo-card {
+      border-radius: 16px; overflow: hidden; position: relative;
+      padding: 2rem; min-height: 220px;
+      display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .promo-card.big {
+      background: linear-gradient(135deg, #8b0000 0%, var(--merah) 100%);
+    }
+    .promo-card.yellow {
+      background: linear-gradient(135deg, #b57d00 0%, var(--kuning) 100%);
+    }
+    .promo-card.dark {
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+    }
+    .promo-bg-emoji {
+      position: absolute; top: 1rem; right: 1rem;
+      font-size: 5rem; opacity: .2;
+    }
+    .promo-tag {
+      font-size: .7rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: rgba(255,255,255,.7); margin-bottom: .5rem;
+    }
+    .promo-title {
+      font-family: var(--display); font-size: 1.35rem;
+      color: var(--putih); line-height: 1.15; margin-bottom: .4rem;
+    }
+    .promo-card.big .promo-title { font-size: 1.75rem; }
+    .promo-desc { font-size: .82rem; color: rgba(255,255,255,.75); margin-bottom: 1rem; }
+    .promo-btn {
+      display: inline-block; padding: .5rem 1.25rem;
+      background: rgba(255,255,255,.2); color: var(--putih);
+      border-radius: 6px; font-size: .82rem; font-weight: 700;
+      border: 1px solid rgba(255,255,255,.3); cursor: pointer;
+      text-decoration: none; transition: background .2s;
+      width: fit-content;
+    }
+    .promo-btn:hover { background: rgba(255,255,255,.35); }
+
+    /* ── TESTIMONIAL ── */
+    #ulasan { background: var(--krem); }
+    .testi-grid {
+      max-width: 1100px; margin: 2.5rem auto 0;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    }
+    .testi-card {
+      background: var(--putih); border-radius: 16px;
+      padding: 1.75rem; border: 1px solid var(--krem2);
+    }
+    .testi-stars { color: var(--kuning); font-size: 1rem; margin-bottom: .75rem; }
+    .testi-text {
+      font-size: .9rem; line-height: 1.65;
+      color: var(--coklat); margin-bottom: 1.25rem;
+      font-style: italic;
+    }
+    .testi-author { display: flex; align-items: center; gap: .75rem; }
+    .testi-avatar {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: var(--krem2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+    }
+    .testi-name { font-weight: 700; font-size: .9rem; color: var(--coklat); }
+    .testi-sub { font-size: .75rem; color: var(--abu); }
+
+    /* ── ORDER / CONTACT ── */
+    #pesan { background: var(--putih); }
+    .order-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start;
+    }
+    .order-form { }
+    .form-row { margin-bottom: 1.25rem; }
+    .form-label {
+      display: block; font-size: .85rem; font-weight: 700;
+      color: var(--coklat); margin-bottom: .4rem;
+    }
+    .form-input, .form-select, .form-textarea {
+      width: 100%; padding: .75rem 1rem;
+      border: 2px solid var(--krem2); border-radius: 10px;
+      font-family: var(--body); font-size: .9rem; color: var(--coklat);
+      background: var(--krem); outline: none;
+      transition: border-color .2s;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--merah);
+    }
+    .form-textarea { resize: vertical; min-height: 100px; }
+    .form-submit {
+      width: 100%; padding: 1rem;
+      background: var(--merah); color: var(--putih);
+      border: none; border-radius: 10px;
+      font-family: var(--body); font-size: 1rem; font-weight: 700;
+      cursor: pointer; transition: background .2s;
+      margin-top: .5rem;
+    }
+    .form-submit:hover { background: var(--merah-gelap); }
+    .contact-info { }
+    .contact-block { margin-bottom: 2rem; }
+    .contact-icon { font-size: 1.75rem; margin-bottom: .5rem; }
+    .contact-title { font-weight: 700; font-size: 1rem; color: var(--coklat); margin-bottom: .25rem; }
+    .contact-val { color: var(--abu); font-size: .9rem; line-height: 1.6; }
+    .whatsapp-btn {
+      display: inline-flex; align-items: center; gap: .6rem;
+      background: #25D366; color: var(--putih);
+      padding: .85rem 1.75rem; border-radius: 10px;
+      font-weight: 700; font-size: .95rem;
+      text-decoration: none; margin-top: .5rem;
+      transition: background .2s;
+    }
+    .whatsapp-btn:hover { background: #1ebe5a; }
+    .map-embed {
+      margin-top: 1.5rem; border-radius: 14px;
+      overflow: hidden; height: 180px;
+      background: var(--krem2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .9rem; color: var(--abu);
+      border: 2px solid var(--krem2);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--coklat);
+      padding: 3rem 5%;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: var(--display);
+      font-size: 1.5rem; color: var(--kuning); margin-bottom: .5rem;
+    }
+    .footer-logo span { color: var(--merah); }
+    .footer-tagline { color: rgba(253,243,231,.5); font-size: .85rem; margin-bottom: 1.5rem; }
+    .footer-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .footer-links a {
+      color: rgba(253,243,231,.6); text-decoration: none;
+      font-size: .85rem; transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--kuning); }
+    .footer-copy { color: rgba(253,243,231,.3); font-size: .78rem; }
+
+    /* ── CART FLOAT ── */
+    .cart-float {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
+      background: var(--merah); color: var(--putih);
+      border-radius: 100px; padding: .85rem 1.5rem;
+      display: flex; align-items: center; gap: .6rem;
+      font-weight: 700; font-size: .95rem;
+      box-shadow: 0 8px 24px rgba(192,57,43,.4);
+      cursor: pointer; transition: transform .2s, background .2s;
+      display: none;
+    }
+    .cart-float:hover { background: var(--merah-gelap); transform: scale(1.04); }
+    .cart-count {
+      background: var(--kuning); color: var(--coklat);
+      border-radius: 100px; width: 22px; height: 22px;
+      font-size: .75rem; display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ── NOTIFICATION TOAST ── */
+    .toast {
+      position: fixed; bottom: 6rem; right: 2rem; z-index: 300;
+      background: var(--coklat); color: var(--putih);
+      padding: .85rem 1.5rem; border-radius: 10px;
+      font-size: .9rem; font-weight: 600;
+      box-shadow: 0 8px 24px rgba(0,0,0,.2);
+      transform: translateY(20px); opacity: 0;
+      transition: all .3s;
+      border-left: 4px solid var(--kuning);
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .hero-content { grid-template-columns: 1fr; text-align: center; }
+      .hero-desc { margin: 0 auto 2rem; }
+      .hero-btns { justify-content: center; }
+      .hero-visual { margin-top: 2rem; }
+      .hero-stats { justify-content: center; }
+      .about-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .about-badge-float { right: 0; }
+      .promo-grid { grid-template-columns: 1fr 1fr; }
+      .promo-card.big { grid-column: 1/-1; }
+      .testi-grid { grid-template-columns: 1fr 1fr; }
+      .order-inner { grid-template-columns: 1fr; gap: 3rem; }
+    }
+    @media (max-width: 600px) {
+      section { padding: 60px 4%; }
+      .promo-grid { grid-template-columns: 1fr; }
+      .testi-grid { grid-template-columns: 1fr; }
+      .about-features { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-logo">Warmindo <span>Gandapura 53</span></div>
+  <ul class="nav-links">
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#promo">Promo</a></li>
+    <li><a href="#tentang">Tentang</a></li>
+    <li><a href="#ulasan">Ulasan</a></li>
+    <li><a href="#pesan">Hubungi</a></li>
+  </ul>
+  <button class="nav-order-btn" onclick="document.getElementById('pesan').scrollIntoView({behavior:'smooth'})">Pesan Sekarang</button>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-badge">🍜 Buka 24 Jam &mdash; Siap Melayani</div>
+      <h1 class="hero-title">
+        Mie Instan<br>
+        <span class="highlight">Paling Enak</span><br>
+        di <span class="accent">Gandapura</span>
+      </h1>
+      <p class="hero-desc">
+        Warmindo Gandapura 53 menyajikan olahan mie instan dengan sentuhan khas
+        yang bikin nagih. Topping melimpah, harga bersahabat, rasa istimewa.
+      </p>
+      <div class="hero-btns">
+        <a href="#menu" class="btn-primary">Lihat Menu</a>
+        <a href="#pesan" class="btn-outline">Pesan via WA</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-num">5K+</div>
+          <div class="stat-label">Pelanggan Setia</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">30+</div>
+          <div class="stat-label">Menu Pilihan</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">4.9★</div>
+          <div class="stat-label">Rating Pelanggan</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="bowl-wrap">
+        <div class="steam">
+          <span class="steam-line"></span>
+          <span class="steam-line"></span>
+          <span class="steam-line"></span>
+        </div>
+        <svg class="bowl-svg" viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg">
+          <!-- Shadow -->
+          <ellipse cx="200" cy="305" rx="130" ry="14" fill="rgba(0,0,0,0.3)"/>
+          <!-- Bowl body -->
+          <path d="M60 140 Q60 290 200 290 Q340 290 340 140 Z" fill="#F5E6CC"/>
+          <path d="M65 150 Q65 280 200 280 Q335 280 335 150 Z" fill="#FDF3E7"/>
+          <!-- Bowl rim -->
+          <ellipse cx="200" cy="140" rx="140" ry="28" fill="#C0392B"/>
+          <ellipse cx="200" cy="140" rx="132" ry="22" fill="#DC4C3E"/>
+          <!-- Soup broth -->
+          <ellipse cx="200" cy="148" rx="124" ry="19" fill="#F39C12" opacity=".6"/>
+          <!-- Noodles -->
+          <g transform="translate(200,175)">
+            <path d="M-70 0 Q-40 -18 0 0 Q40 18 70 0" stroke="#F5E6CC" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <path d="M-65 12 Q-30 -6 10 12 Q45 28 65 12" stroke="#EDE0C4" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+            <path d="M-55 24 Q-20 8 15 24 Q50 40 55 24" stroke="#F5E6CC" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <path d="M-45 -10 Q-10 -28 20 -10 Q55 8 50 -10" stroke="#EDE0C4" stroke-width="4" fill="none" stroke-linecap="round"/>
+          </g>
+          <!-- Egg (telur) -->
+          <ellipse cx="150" cy="178" rx="22" ry="18" fill="#FDFBE8" stroke="#E8D8A0" stroke-width="1.5"/>
+          <ellipse cx="150" cy="178" rx="10" ry="8" fill="#F39C12"/>
+          <!-- Green onion -->
+          <rect x="255" y="158" width="5" height="35" rx="2.5" fill="#2ECC71" transform="rotate(-12,255,158)"/>
+          <rect x="265" y="162" width="4" height="28" rx="2" fill="#27AE60" transform="rotate(8,265,162)"/>
+          <!-- Chili -->
+          <ellipse cx="230" cy="163" rx="7" ry="3" fill="#E74C3C" transform="rotate(-20,230,163)"/>
+          <!-- Bowl band decoration -->
+          <path d="M64 155 Q70 140 80 138" stroke="#fff" stroke-width="2" fill="none" opacity=".3"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="section-head">
+    <div class="section-eyebrow">Menu Kami</div>
+    <h2 class="section-title">Pilihan Makanan & Minuman</h2>
+    <p class="section-desc">Semua menu dimasak segar dengan bahan pilihan. Sesuaikan level pedas sesuai selera kamu!</p>
+  </div>
+  <div class="menu-filter">
+    <button class="filter-btn active" onclick="filterMenu('semua',this)">Semua</button>
+    <button class="filter-btn" onclick="filterMenu('mie',this)">Mie</button>
+    <button class="filter-btn" onclick="filterMenu('nasi',this)">Nasi</button>
+    <button class="filter-btn" onclick="filterMenu('minuman',this)">Minuman</button>
+    <button class="filter-btn" onclick="filterMenu('snack',this)">Snack</button>
+  </div>
+  <div class="menu-grid" id="menuGrid">
+    <!-- Cards injected by JS -->
+  </div>
+</section>
+
+<!-- PROMO -->
+<section id="promo">
+  <div class="promo-inner">
+    <div class="section-head">
+      <div class="section-eyebrow" style="color:var(--kuning)">Penawaran Spesial</div>
+      <h2 class="section-title" style="color:var(--putih)">Promo Hari Ini</h2>
+    </div>
+    <div class="promo-grid">
+      <div class="promo-card big">
+        <div class="promo-bg-emoji">🍜</div>
+        <div class="promo-tag">Promo Utama</div>
+        <div class="promo-title">Mie Spesial + Telur + Es Teh<br>Cuma Rp 18.000!</div>
+        <div class="promo-desc">Paket hemat, kenyang, dan mantap. Setiap hari, selama stok ada.</div>
+        <a href="#pesan" class="promo-btn">Pesan Sekarang →</a>
+      </div>
+      <div class="promo-card yellow">
+        <div class="promo-bg-emoji">☕</div>
+        <div class="promo-tag">Happy Hour</div>
+        <div class="promo-title">Kopi Gratis Jam 06.00–08.00</div>
+        <div class="promo-desc">Beli mie apapun, dapat kopi hitam gratis di pagi hari.</div>
+        <a href="#pesan" class="promo-btn">Lihat Detail →</a>
+      </div>
+      <div class="promo-card dark">
+        <div class="promo-bg-emoji">👥</div>
+        <div class="promo-tag">Paket Rombongan</div>
+        <div class="promo-title">Beli 5 Porsi Gratis 1</div>
+        <div class="promo-desc">Cocok untuk makan bareng teman atau keluarga.</div>
+        <a href="#pesan" class="promo-btn">Info Lengkap →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TENTANG -->
+<section id="tentang">
+  <div class="about-inner">
+    <div class="about-img-stack">
+      <div class="about-main-img">🍳</div>
+      <div class="about-badge-float">
+        <div class="about-badge-num">2015</div>
+        <div class="about-badge-text">Berdiri Sejak</div>
+      </div>
+    </div>
+    <div class="about-text">
+      <div class="section-eyebrow">Tentang Kami</div>
+      <h2 class="section-title">Warmindo dengan Jiwa Asli Lokal</h2>
+      <p class="section-desc">
+        Warmindo Gandapura 53 hadir sejak 2015 dengan misi sederhana: menyajikan
+        mie instan yang bukan sekadar direbus, tapi diracik dengan penuh rasa dan cinta.
+        Kami percaya makanan murah bisa tetap istimewa.
+      </p>
+      <div class="about-features">
+        <div class="feat-item">
+          <div class="feat-icon">🔥</div>
+          <div>
+            <div class="feat-name">Dimasak Segar</div>
+            <div class="feat-sub">Setiap pesanan dimasak langsung, tidak dipanaskan ulang</div>
+          </div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-icon">🌶️</div>
+          <div>
+            <div class="feat-name">Level Pedas Bebas</div>
+            <div class="feat-sub">Dari tidak pedas sampai super pedas tersedia</div>
+          </div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-icon">🕐</div>
+          <div>
+            <div class="feat-name">Buka 24 Jam</div>
+            <div class="feat-sub">Lapar tengah malam pun tetap bisa makan di sini</div>
+          </div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-icon">💰</div>
+          <div>
+            <div class="feat-name">Harga Merakyat</div>
+            <div class="feat-sub">Mulai dari Rp 7.000, cukup untuk semua kalangan</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ULASAN -->
+<section id="ulasan">
+  <div class="section-head center">
+    <div class="section-eyebrow">Testimoni</div>
+    <h2 class="section-title">Kata Pelanggan Kami</h2>
+    <p class="section-desc">Lebih dari 5.000 pelanggan setia sudah membuktikan kelezatan Warmindo Gandapura 53.</p>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Mie gorengnya juara! Topping melimpah, kuah sotonya bikin nagih. Sudah jadi langganan sejak tahun 2020, belum pernah kecewa."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">👨</div>
+        <div>
+          <div class="testi-name">Agus Setiawan</div>
+          <div class="testi-sub">Pelanggan Setia</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Buka 24 jam itu penyelamat banget! Sering nongkrong di sini sampai subuh, tempatnya nyaman dan harganya murah banget."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">👩</div>
+        <div>
+          <div class="testi-name">Siti Rahma</div>
+          <div class="testi-sub">Mahasiswi</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Paling suka paket mie + nasi + telur ceplok. Porsinya besar, cukup untuk sarapan berat. Rekomen banget buat yang suka makan kenyang!"</p>
+      <div class="testi-author">
+        <div class="testi-avatar">👨‍💼</div>
+        <div>
+          <div class="testi-name">Dedi Permana</div>
+          <div class="testi-sub">Karyawan Swasta</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PESAN / KONTAK -->
+<section id="pesan">
+  <div class="section-head">
+    <div class="section-eyebrow">Hubungi Kami</div>
+    <h2 class="section-title">Pesan atau Tanya-Tanya</h2>
+    <p class="section-desc">Isi form di bawah atau hubungi langsung via WhatsApp. Kami siap melayani!</p>
+  </div>
+  <div class="order-inner">
+    <div class="order-form">
+      <div class="form-row">
+        <label class="form-label">Nama Kamu</label>
+        <input type="text" class="form-input" placeholder="Contoh: Budi Santoso" id="formNama"/>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Nomor WhatsApp</label>
+        <input type="text" class="form-input" placeholder="Contoh: 0812xxxxxxxx" id="formWA"/>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Menu yang Dipesan</label>
+        <select class="form-select" id="formMenu">
+          <option value="">-- Pilih Menu --</option>
+          <option>Mie Goreng Spesial</option>
+          <option>Mie Rebus Soto</option>
+          <option>Mie Goreng Keju</option>
+          <option>Nasi Goreng Spesial</option>
+          <option>Paket Mie + Nasi + Telur</option>
+          <option>Es Teh Manis</option>
+          <option>Kopi Susu Warmindo</option>
+          <option>Menu Lainnya (tulis di catatan)</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Catatan / Kustomisasi</label>
+        <textarea class="form-textarea" placeholder="Contoh: pedas level 3, tambah telur, tidak pakai bawang..." id="formNote"></textarea>
+      </div>
+      <button class="form-submit" onclick="submitOrder()">🍜 Kirim Pesanan via WhatsApp</button>
+    </div>
+    <div class="contact-info">
+      <div class="contact-block">
+        <div class="contact-icon">📍</div>
+        <div class="contact-title">Lokasi</div>
+        <div class="contact-val">Jl. Gandapura No. 53<br>Bandung, Jawa Barat</div>
+      </div>
+      <div class="contact-block">
+        <div class="contact-icon">🕐</div>
+        <div class="contact-title">Jam Operasional</div>
+        <div class="contact-val">Buka 24 Jam, 7 Hari Seminggu<br>Termasuk Hari Libur Nasional</div>
+      </div>
+      <div class="contact-block">
+        <div class="contact-icon">📱</div>
+        <div class="contact-title">Hubungi Langsung</div>
+        <div class="contact-val">
+          <a class="whatsapp-btn" href="https://wa.me/6281234567890?text=Halo%20Warmindo%20Gandapura%2053%2C%20saya%20mau%20pesan!" target="_blank">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp Kami
+          </a>
+        </div>
+      </div>
+      <div class="map-embed">
+        📍 Jl. Gandapura No. 53, Bandung
+        <br><small style="color:var(--abu)">Klik untuk buka di Google Maps</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Warmindo <span>Gandapura 53</span></div>
+  <div class="footer-tagline">Mie Instan Paling Enak di Gandapura · Buka 24 Jam</div>
+  <div class="footer-links">
+    <a href="#hero">Beranda</a>
+    <a href="#menu">Menu</a>
+    <a href="#promo">Promo</a>
+    <a href="#tentang">Tentang</a>
+    <a href="#ulasan">Ulasan</a>
+    <a href="#pesan">Pesan</a>
+  </div>
+  <div class="footer-copy">© 2025 Warmindo Gandapura 53. Dibuat dengan ❤️ dan mie instan.</div>
+</footer>
+
+<!-- Cart Float Button -->
+<div class="cart-float" id="cartFloat" onclick="document.getElementById('pesan').scrollIntoView({behavior:'smooth'})">
+  🛒 Keranjang
+  <span class="cart-count" id="cartCount">0</span>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // ── MENU DATA ──
+  const menuItems = [
+    { id:1, cat:'mie', name:'Mie Goreng Spesial', desc:'Mie goreng dengan bumbu rahasia, telur ceplok, dan sayuran segar. Level pedas bisa disesuaikan.', price:12000, emoji:'🍜' },
+    { id:2, cat:'mie', name:'Mie Rebus Kuah Soto', desc:'Mie rebus dalam kuah soto gurih, dilengkapi dengan topping ayam suwir dan daun bawang.', price:11000, emoji:'🍲' },
+    { id:3, cat:'mie', name:'Mie Goreng Keju', desc:'Mie goreng spesial dengan taburan keju melt dan saus mayo. Favorit anak muda!', price:14000, emoji:'🧀' },
+    { id:4, cat:'mie', name:'Mie Rebus Pedas Mercon', desc:'Level pedas tertinggi! Kuah merah membara dengan cabai rawit segar. Berani coba?', price:13000, emoji:'🌶️' },
+    { id:5, cat:'nasi', name:'Nasi Goreng Spesial', desc:'Nasi goreng dengan bumbu kecap manis, telur dadar tipis, kerupuk, dan acar.', price:13000, emoji:'🍳' },
+    { id:6, cat:'nasi', name:'Paket Mie + Nasi + Telur', desc:'Paket paling kenyang! Mie rebus + nasi putih + telur ceplok + kerupuk. Paling laris!', price:17000, emoji:'🍱' },
+    { id:7, cat:'nasi', name:'Nasi Telur Ceplok', desc:'Simpel tapi memuaskan. Nasi panas dengan telur ceplok setengah matang dan sambal.', price:9000, emoji:'🥚' },
+    { id:8, cat:'minuman', name:'Es Teh Manis', desc:'Teh manis dingin segar, pilihan klasik yang cocok menemani mie panas.', price:5000, emoji:'🧋' },
+    { id:9, cat:'minuman', name:'Kopi Susu Warmindo', desc:'Kopi susu khas warmindo, manis gurih dengan kopi robusta pilihan.', price:7000, emoji:'☕' },
+    { id:10, cat:'minuman', name:'Jeruk Peras Dingin', desc:'Jeruk peras segar tanpa pengawet, manis asam alami yang menyegarkan.', price:8000, emoji:'🍊' },
+    { id:11, cat:'snack', name:'Pisang Goreng Keju', desc:'Pisang goreng renyah dengan taburan keju dan susu kental manis. Cocok untuk cemilan!', price:8000, emoji:'🍌' },
+    { id:12, cat:'snack', name:'Tempe Mendoan', desc:'Tempe mendoan goreng setengah matang, empuk di dalam, crispy di luar. Dinikmati dengan sambal kecap.', price:6000, emoji:'🟫' },
+  ];
+
+  let cart = 0;
+
+  function renderMenu(cat='semua') {
+    const grid = document.getElementById('menuGrid');
+    const filtered = cat === 'semua' ? menuItems : menuItems.filter(m => m.cat === cat);
+    grid.innerHTML = filtered.map(item => `
+      <div class="menu-card" data-cat="${item.cat}">
+        <div class="card-img">${item.emoji}</div>
+        <div class="card-body">
+          <div class="card-tag">${item.cat.toUpperCase()}</div>
+          <div class="card-name">${item.name}</div>
+          <div class="card-desc">${item.desc}</div>
+          <div class="card-footer">
+            <div class="card-price">Rp ${item.price.toLocaleString('id-ID')}</div>
+            <button class="add-btn" onclick="addToCart('${item.name}', ${item.price})" title="Tambah ke pesanan">+</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function filterMenu(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderMenu(cat);
+  }
+
+  function addToCart(name, price) {
+    cart++;
+    document.getElementById('cartFloat').style.display = 'flex';
+    document.getElementById('cartCount').textContent = cart;
+    showToast(`✅ ${name} ditambahkan!`);
+    // Pre-fill form menu
+    const sel = document.getElementById('formMenu');
+    for(let opt of sel.options) {
+      if(opt.text.includes(name.substring(0,8))) { sel.value = opt.value; break; }
+    }
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  function submitOrder() {
+    const nama = document.getElementById('formNama').value.trim();
+    const wa   = document.getElementById('formWA').value.trim();
+    const menu = document.getElementById('formMenu').value;
+    const note = document.getElementById('formNote').value.trim();
+    if (!nama || !wa) { showToast('⚠️ Isi nama dan nomor WA dulu ya!'); return; }
+    const msg = encodeURIComponent(
+      `Halo Warmindo Gandapura 53! 👋\n\nNama: ${nama}\nPesanan: ${menu || 'Lihat catatan'}\nCatatan: ${note || '-'}\n\nMohon diproses ya, terima kasih! 🙏`
+    );
+    window.open(`https://wa.me/6285136940558?text=${msg}`, '_blank');
+  }
+
+  function toggleMenu() {
+    const links = document.querySelector('.nav-links');
+    if (links.style.display === 'flex') {
+      links.style.display = 'none';
+    } else {
+      links.style.cssText = 'display:flex;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:var(--coklat);padding:1rem 5%;gap:1rem;';
+    }
+  }
+
+  // Init
+  renderMenu();
+</script>
+</body>
+</html>
